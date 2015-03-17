@@ -4,18 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | List of Classes Representing Different Organization Types
-    |--------------------------------------------------------------------------
-    |
-    | This value is an array containing the names of all organization classes
-    | (i.e., that implement the DemocracyApps\MultiOrg\Organization interface.
-    | By default, we assume a single class called Organization
-    |
-    */
-    'organization_classes' => ['Organization'],
-
-    /*
-    |--------------------------------------------------------------------------
     | Permission Levels
     |--------------------------------------------------------------------------
     |
@@ -27,6 +15,17 @@ return [
     */
     'permission_levels' => 9,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Additional Permission Factors
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'user_implements_superuser' => true,
+    'user_superuser_column' => 'superuser',
+    'user_implements_confirmation' => false,
+    'user_confirmation_column' => 'confirmed',
     /*
     |--------------------------------------------------------------------------
     | User Table Name

@@ -22,9 +22,7 @@ class MultiOrgServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('DemocracyApps\MultiOrg\MultiOrgManager', function ($app) {
-           return new MultiOrgManager();
-        });
+        // No bindings
     }
     
         /**
@@ -34,6 +32,9 @@ class MultiOrgServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $this->publishes([
+            __DIR__ . '/config/multi-org.php' => config_path('multi-org.php')
+        ]);
+
     }
 }

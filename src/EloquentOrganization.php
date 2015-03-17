@@ -41,6 +41,9 @@ trait EloquentOrganization
     public function userHasAccess(UserContract $user, $minimumRequired)
     {
         $hasAccess = false;
+        if (config('user_implements_superuser')) {
+            dd("Yay");
+        }
         $member = $this->getOrganizationMember($user);
         if ($member != null) {
             if ($member->access >= $minimumRequired) $hasAccess = true;
