@@ -41,8 +41,14 @@ trait EloquentOrganization
     public function userHasAccess(UserContract $user, $minimumRequired)
     {
         $hasAccess = false;
-        if (config('user_implements_superuser')) {
-            dd("Yay");
+        if (config('multi-org.user_implements_superuser')) {
+            if ($user->{config('multi-org.user_superuser_column')}) return true;
+        }
+
+        if ($minimumRequired > 0) {
+            if (config('multi-org.user_implements_confirmation')) {
+                if (!($user->{config('multi-org.user_confirmation_column')})) return false;
+            }
         }
         $member = $this->getOrganizationMember($user);
         if ($member != null) {
@@ -50,6 +56,9 @@ trait EloquentOrganization
         }
         return $hasAccess;
     }
+
+    // MAYBE DIAGNOSE NON-ACCESS?????
+
 
     /**
      * @param UserContract $user
