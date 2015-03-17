@@ -5,13 +5,13 @@ use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 /*
  * EloquentOrganization implements the Organization interface when the org is an Eloquent model
  */
-trait EloquentOrganization
+class EloquentOrganization implements Organization
 {
 
-    private function getOrgUserClass()
+    private function getOrgMemberClass()
     {
-        $orgUserClassName = get_class($this) . "User";
-        return new \ReflectionClass($orgUserClassName);
+        $orgMemberClassName = get_class($this) . "User";
+        return new \ReflectionClass($orgMemberClassName);
     }
 
     private function getOrgIdName()
@@ -20,86 +20,99 @@ trait EloquentOrganization
         return snake_case($c->getShortName()) . '_id';
     }
 
-
-    public function hasAccess(User $user, $minimumRequired)
-    {
-
-    }
-
     /**
      * @param UserContract $user
-     * @param integer $minimumLevel
-     * @return boolean
+     * @return OrganizationMember
      */
-    public function userHasAccess(UserContract $user, $minimumLevel)
+    public function getOrganizationMember (UserContract $user)
     {
-        // TODO: Implement userHasAccess() method.
+        $memberClass = $this->getOrgMemberClass();
+        $queryMethod = $memberClass->getMethod('query');
+        $builder = $queryMethod->invoke(null);
+        $member = $builder->where('user_id', '=', $user->getAuthIdentifier())->first();
+        return $member;
     }
 
     /**
      * @param UserContract $user
-     * @return mixed
+     * @param integer $minimumRequired
+     * @return bool
+     */
+    public function userHasAccess(UserContract $user, $minimumRequired)
+    {
+        $hasAccess = false;
+        $member = $this->getOrganizationMember($user);
+        if ($member != null) {
+            if ($member->access >= $minimumRequired) $hasAccess = true;
+        }
+        return $hasAccess;
+    }
+
+    /**
+     * @param UserContract $user
+     * @return integer
      */
     public function getUserAccess(UserContract $user)
     {
-        // TODO: Implement getUserAccess() method.
+        $access = -1;
+        $member = $this->getOrganizationMember($user);
+        if ($member != null) $access = $member->access;
+        return $access;
     }
-//        $userObject = $userClass->newInstance();
-//        dd($userObject);
-//        $modelClass = get_class($userObject);
-//        dd($modelClass);
+
     /**
      * @param UserContract $user
      * @return boolean
      */
     public function userIsMember(UserContract $user)
     {
-        $userClass = $this->getOrgUserClass();
-
-        $queryMethod = $userClass->getMethod('query');
-        $builder = $queryMethod->invoke(null);
-        $user = $builder->where('user_id', '=', $user->getAuthIdentifier())->first();
-        if ($user != null) return true;
+        $member = $this->getOrganizationMember($user);
+        if ($member != null) return true;
         return false;
     }
 
     /**
      * @param UserContract $user
-     * @param $access
-     * @param array $parameters
-     * @return mixed
-     * @throws Exception
+     * @param integer $access
+     * @return OrganizationUser
+     * @throws \Exception
      */
-    public function addUser(UserContract $user, $access, array $parameters = null)
+    public function addMember(UserContract $user, $access)
     {
-        if ($this->userIsMember($user)) throw new \Exception ("User already added");
-        $userClass = $this->getOrgUserClass();
-        $orgUser = $userClass->newInstance();
-        $orgUser->user_id = $user->getAuthIdentifier();
+        if ($this->userIsMember($user)) throw new \Exception ("User already added as a member");
+        $memberClass = $this->getOrgMemberClass();
+        $member = $memberClass->newInstance();
+        $member->user_id = $user->getAuthIdentifier();
         $orgIdName = $this->getOrgIdName();
-        $orgUser->{$orgIdName} = $this->id;
-        $orgUser->access = $access;
-        $orgUser->save();
-        return $orgUser;
+        $member->{$orgIdName} = $this->id;
+        $member->access = $access;
+        $member->save();
+        return $member;
     }
+
 
     /**
      * @param UserContract $user
-     * @return mixed
+     * @return void
+     * @throws \Exception
      */
-    public function deleteUser(UserContract $user)
+    public function deleteMember(UserContract $user)
     {
-        // TODO: Implement deleteUser() method.
+        $member = $this->getOrganizationMember($user);
+        if ($member == null) throw new \Exception("User is not a member of the organization");
+        $member->delete();
     }
 
     /**
      * @param UserContract $user
      * @param $access
-     * @param array $parameters
-     * @return mixed
+     * @return void
+     * @throws \Exception
      */
-    public function updateUser(UserContract $user, $access, array $parameters = null)
+    public function updateMember(UserContract $user, $access)
     {
-        // TODO: Implement updateUser() method.
+        $member = $this->getOrganizationMember($user);
+        if ($member == null) throw new \Exception("User is not a member of the organization");
+        $member->access = $access;
     }
 }

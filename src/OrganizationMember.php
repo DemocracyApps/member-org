@@ -3,7 +3,7 @@
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 
-interface OrganizationUser
+interface OrganizationMember
 {
     /**
      * @return mixed

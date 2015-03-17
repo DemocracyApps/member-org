@@ -7,14 +7,20 @@ interface Organization {
 
     /**
      * @param UserContract $user
-     * @param integer $minimumLevel
-     * @return boolean
+     * @return OrganizationMember
      */
-    public function userHasAccess(UserContract $user, $minimumLevel);
+    public function getOrganizationMember (UserContract $user);
 
     /**
      * @param UserContract $user
-     * @return mixed
+     * @param integer $minimumRequired
+     * @return bool
+     */
+    public function userHasAccess(UserContract $user, $minimumRequired);
+
+    /**
+     * @param UserContract $user
+     * @return integer
      */
     public function getUserAccess(UserContract $user);
 
@@ -26,24 +32,24 @@ interface Organization {
 
     /**
      * @param UserContract $user
-     * @param $access
-     * @param array $parameters
-     * @return mixed
+     * @param integer $access
+     * @return OrganizationUser
+     * @throws \Exception
      */
-    public function addUser (UserContract $user, $access, array $parameters = null);
+    public function addMember(UserContract $user, $access);
 
     /**
      * @param UserContract $user
-     * @return mixed
+     * @return void
+     * @throws \Exception
      */
-    public function deleteUser (UserContract $user);
+    public function deleteMember(UserContract $user);
 
     /**
      * @param UserContract $user
      * @param $access
-     * @param array $parameters
-     * @return mixed
+     * @return void
+     * @throws \Exception
      */
-    public function updateUser (UserContract $user, $access, array $parameters = null);
-
+    public function updateMember(UserContract $user, $access);
 }
