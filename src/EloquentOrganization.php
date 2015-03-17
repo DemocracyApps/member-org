@@ -7,28 +7,19 @@ use Illuminate\Contracts\Auth\Authenticatable as UserContract;
  */
 trait EloquentOrganization
 {
-    private $orgUserClassName = null;
-    private $orgUserTableName = null;
-
-    private function getOrgUserClassName()
-    {
-        if ($this->orgUserClassName == null) {
-            $orgClass = $this->get_class();
-            $this->orgUserClassName = $orgClass . "User";
-            $this->orgUserTableName = snake_case($this->orgUserClassName);
-        }
-        return $this->orgUserClassName;
-    }
 
     private function getOrgUserClass()
     {
-        return new \ReflectionClass($this->getOrgUserClassName());
+        $orgUserClassName = get_class($this) . "User";
+        return new \ReflectionClass($orgUserClassName);
     }
 
-    private function getOrgUserTableName() {
-        if ($this->orgUserTableName == null) $this->getOrgUserClassName();
-        return $this->orgUserTableName;
+    private function getOrgIdName()
+    {
+        $c = new \ReflectionClass(get_class($this));
+        return snake_case($c->getShortName()) . '_id';
     }
+
 
     public function hasAccess(User $user, $minimumRequired)
     {
@@ -53,14 +44,23 @@ trait EloquentOrganization
     {
         // TODO: Implement getUserAccess() method.
     }
-
+//        $userObject = $userClass->newInstance();
+//        dd($userObject);
+//        $modelClass = get_class($userObject);
+//        dd($modelClass);
     /**
      * @param UserContract $user
      * @return boolean
      */
     public function userIsMember(UserContract $user)
     {
-        // TODO: Implement userIsMember() method.
+        $userClass = $this->getOrgUserClass();
+
+        $queryMethod = $userClass->getMethod('query');
+        $builder = $queryMethod->invoke(null);
+        $user = $builder->where('user_id', '=', $user->getAuthIdentifier())->first();
+        if ($user != null) return true;
+        return false;
     }
 
     /**
@@ -68,16 +68,19 @@ trait EloquentOrganization
      * @param $access
      * @param array $parameters
      * @return mixed
+     * @throws Exception
      */
     public function addUser(UserContract $user, $access, array $parameters = null)
     {
-        // TODO: Implement addUser() method.
+        if ($this->userIsMember($user)) throw new \Exception ("User already added");
         $userClass = $this->getOrgUserClass();
         $orgUser = $userClass->newInstance();
         $orgUser->user_id = $user->getAuthIdentifier();
-        $orgUser->org_id = $this->id;
+        $orgIdName = $this->getOrgIdName();
+        $orgUser->{$orgIdName} = $this->id;
         $orgUser->access = $access;
         $orgUser->save();
+        return $orgUser;
     }
 
     /**
