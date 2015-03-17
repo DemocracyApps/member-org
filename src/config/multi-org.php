@@ -20,9 +20,12 @@ return [
     | Additional Permission Factors
     |--------------------------------------------------------------------------
     |
+    | Additional possible columns in the User model. Superuser has access to
+    | everything. Non-confirmed users only have 0-level access regardless of
+    | their access setting until they confirm.
     */
 
-    'user_implements_superuser' => true,
+    'user_implements_superuser' => false,
     'user_superuser_column' => 'superuser',
     'user_implements_confirmation' => false,
     'user_confirmation_column' => 'confirmed',
