@@ -1,4 +1,4 @@
-<?php namespace DemocracyApps\MultiOrg
+<?php namespace DemocracyApps\MultiOrg;
 
 class MultiOrgManager {
 
