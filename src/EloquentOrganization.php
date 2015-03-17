@@ -5,7 +5,7 @@ use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 /*
  * EloquentOrganization implements the Organization interface when the org is an Eloquent model
  */
-class EloquentOrganization implements Organization
+trait EloquentOrganization implements Organization
 {
 
     private function getOrgMemberClass()
