@@ -1,4 +1,4 @@
-<?php namespace DemocracyApps\MultiOrg\Providers;
+<?php namespace DemocracyApps\MultiOrg;
 
 /*
 * This file is part of the DemocracyApps\multi-org package.
