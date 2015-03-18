@@ -145,6 +145,7 @@ trait EloquentOrganization
         $member = $this->getOrganizationMember($user);
         if ($member == null) throw new \Exception("User is not a member of the organization");
         $maxPermission = config('multi-org.max_permission_level');
+        if ($maxPermission != null) $maxPermission = 9;
         if ($access > $maxPermission) $access = $maxPermission;
         $member->access = $access;
     }
