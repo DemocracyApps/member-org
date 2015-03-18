@@ -3,7 +3,7 @@
 /*
 * This file is part of the DemocracyApps\multi-org package.
 *
-* Copyright DemocracyApps, Inc.
+* Copyright 2015 DemocracyApps, Inc.
 *
 * See the LICENSE.txt file distributed with this source code for full copyright and license information.
 *
