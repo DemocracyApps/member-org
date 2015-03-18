@@ -27,8 +27,10 @@ return [
 
     'user_implements_superuser' => false,
     'user_superuser_column' => 'superuser',
+
     'user_implements_confirmation' => false,
     'user_confirmation_column' => 'confirmed',
+    'user_confirmation_required_threshold' => 0,
     /*
     |--------------------------------------------------------------------------
     | User Table Name

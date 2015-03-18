@@ -40,21 +40,29 @@ trait EloquentOrganization
      */
     public function userHasAccess(UserContract $user, $minimumRequired)
     {
-        $hasAccess = false;
+        /*
+         * If user is configured with a superuser flag, see if they are
+         * a superuser.
+         */
         if (config('multi-org.user_implements_superuser')) {
             if ($user->{config('multi-org.user_superuser_column')}) return true;
         }
 
-        if ($minimumRequired > 0) {
-            if (config('multi-org.user_implements_confirmation')) {
+        /*
+         * If users are required to confirm their accounts, check that they
+         * are confirmed or that we're below the threshold that requires it
+         */
+        if (config('multi-org.user_implements_confirmation')) {
+            if ($minimumRequired > config('user_confirmation_required_threshold')) {
                 if (!($user->{config('multi-org.user_confirmation_column')})) return false;
             }
         }
+
         $member = $this->getOrganizationMember($user);
         if ($member != null) {
-            if ($member->access >= $minimumRequired) $hasAccess = true;
+            if ($member->access >= $minimumRequired) return true;
         }
-        return $hasAccess;
+        return false;
     }
 
     // MAYBE DIAGNOSE NON-ACCESS?????
@@ -97,6 +105,8 @@ trait EloquentOrganization
         $member->user_id = $user->getAuthIdentifier();
         $orgIdName = $this->getOrgIdName();
         $member->{$orgIdName} = $this->id;
+        $maxPermission = config('multi-org.permission_levels');
+        if ($access > $maxPermission) $access = $maxPermission;
         $member->access = $access;
         $member->save();
         return $member;
@@ -125,6 +135,8 @@ trait EloquentOrganization
     {
         $member = $this->getOrganizationMember($user);
         if ($member == null) throw new \Exception("User is not a member of the organization");
+        $maxPermission = config('multi-org.permission_levels');
+        if ($access > $maxPermission) $access = $maxPermission;
         $member->access = $access;
     }
 }
