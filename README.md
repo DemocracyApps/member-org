@@ -61,7 +61,7 @@ allow it to be set to something different.):
     use DemocracyApps\MultiOrg\EloquentOrganizationMember;
     use DemocracyApps\MultiOrg\OrganizationMember;
 
-    class Company implements OrganizationMember
+    class CompanyMember implements OrganizationMember
     {
         use EloquentOrganizationMember;
         ...
