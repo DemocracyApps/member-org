@@ -41,4 +41,6 @@ return [
     'user_confirmation_column' => 'confirmed',
     'user_confirmation_required_threshold' => 0,
 
+    'member_class_suffix' => 'Member',
+
 ];

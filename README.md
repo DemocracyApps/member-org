@@ -55,8 +55,8 @@ Change the class to implement the Organization interface and make use of the Elo
         ...
     }
     
-In addition, create a *CompanyMember* class (NOTE: the 'Member' part of the name is currently required. I'll probably add
-an option in the configuration file to allow it to be set to something different.):
+In addition, create a *CompanyMember* class (NOTE: the 'Member' part of the name is required. An option in the configuration file will
+allow it to be set to something different.):
 
     use DemocracyApps\MultiOrg\EloquentOrganizationMember;
     use DemocracyApps\MultiOrg\OrganizationMember;
