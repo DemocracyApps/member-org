@@ -3,6 +3,8 @@ Laravel application support for multiple org types, each with own users with mul
 and OrganizationMember present an interface, while EloquentOrganization and EloquentOrganizationMember are traits that provide 
 a full implementation when added to an Eloquent model.
 
+The package is quite simple. It's most useful when a platform must support multiple types of organizations and organization members at the same time.
+
 
 ## Instructions For Use
 
