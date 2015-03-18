@@ -1,5 +1,14 @@
 <?php
 
+/*
+* This file is part of the DemocracyApps\multi-org package.
+*
+* Copyright DemocracyApps, Inc.
+*
+* See the LICENSE.txt file distributed with this source code for full copyright and license information.
+*
+*/
+
 return [
 
     /*
@@ -31,14 +40,5 @@ return [
     'user_implements_confirmation' => false,
     'user_confirmation_column' => 'confirmed',
     'user_confirmation_required_threshold' => 0,
-    /*
-    |--------------------------------------------------------------------------
-    | User Table Name
-    |--------------------------------------------------------------------------
-    |
-    | We assume a joining table linking users to organizations. This is the name
-    | of the users table.
-    */
-    'user_table_name' => 'users'
 
 ];
