@@ -11,9 +11,9 @@
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 //
-// EloquentOrganization implements the Organization interface when the org is an Eloquent model
+// EloquentOrganizationMember implements the OrganizationMember interface when the org and user are Eloquent models
 //
-trait EloquentOrganizationUser
+trait EloquentOrganizationMember
 {
 
     /**
