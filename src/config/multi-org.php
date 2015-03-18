@@ -13,7 +13,7 @@ return [
     | with access level 5 or higher.
     |
     */
-    'permission_levels' => 9,
+    'max_permission_level' => 9,
 
     /*
     |--------------------------------------------------------------------------
