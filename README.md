@@ -107,7 +107,7 @@ accounts. Thus, a full administrator (access=9) would remain restricted to acces
 ### Basic Use
 
 So far I am making use of the package in two simple ways. First, I use the Organization's *addMember* method to create
-organization users (this creates the entry in the database as well). Second, I use the Organization's *userHasAccess* method
+organization users (this creates the entry in the database). Second, I use the Organization's *userHasAccess* method
 in route middleware to restrict access to organization pages (generally admin pages).
 
 Here is a concrete example of a middleware class for company admin pages. In the route, the company ID is in the 2nd route segment.
