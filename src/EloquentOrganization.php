@@ -19,7 +19,9 @@ trait EloquentOrganization
 
     private function getOrgMemberClass()
     {
-        $orgMemberClassName = get_class($this) . "User";
+        $suffix = "User";
+        if (config('multi-org.member_class_suffix')) $suffix = config('multi-org.member_class_suffix');
+        $orgMemberClassName = get_class($this) . $suffix;
         return new \ReflectionClass($orgMemberClassName);
     }
 
