@@ -75,6 +75,7 @@ None of the columns may be null. Note that the second column must be named with 
 ### Configuration Parameters
 
 There are three main parameters and a few auxiliary ones. If you wish to change the defaults, add the service provider, run
+
     php artisan vendor:publish
 
 and edit 'config/multi-org.php'.
@@ -109,7 +110,7 @@ So far I am making use of the package in two simple ways. First, I use the Organ
 organization users (this creates the entry in the database as well). Second, I use the Organization's *userHasAccess* method
 in route middleware to restrict access to organization pages (generally admin pages).
 
-Heres is a concrete example of a middleware class for company admin pages. In the route, the company ID is in the 2nd route segment.
+Here is a concrete example of a middleware class for company admin pages. In the route, the company ID is in the 2nd route segment.
 
     class VerifyCompanyAccess {
     
