@@ -11,7 +11,7 @@
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 
-interface Organization {
+interface MemberOrganization {
 
     /**
      * @param UserContract $user

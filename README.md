@@ -1,4 +1,4 @@
-# multi-org
+# member-org
 Laravel application support for multiple org types, each with own users with multiple permission levels. Organization 
 and OrganizationMember present an interface, while EloquentOrganization and EloquentOrganizationMember are traits that provide 
 a full implementation when added to an Eloquent model.

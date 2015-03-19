@@ -9,10 +9,9 @@
 *
 */
 
-use DemocracyApps\MultiOrg\MultiOrgManager;
 use Illuminate\Support\ServiceProvider;
 
-class MultiOrgServiceProvider extends ServiceProvider
+class MemberOrganizationServiceProvider extends ServiceProvider
 {
 
     /**
