@@ -1,6 +1,6 @@
 # member-org
 Laravel application support for multiple org types, each with own users with multiple permission levels. Organization 
-and OrganizationMember present an interface, while EloquentOrganization and EloquentOrganizationMember are traits that provide 
+and OrganizationMember present an interface, while EloquentMemberOrganization and EloquentOrganizationMember are traits that provide 
 a full implementation when added to an Eloquent model.
 
 The package is quite simple. It's most useful when a platform must support multiple types of organizations and organization members at the same time.
@@ -14,7 +14,7 @@ Begin by installing this package through Composer.
 
     {
         "require": {
-            "democracyapps/multi-org": "dev-master"
+            "democracyapps/member-org": "dev-master"
         }
     }
 
@@ -25,7 +25,7 @@ Add the service provider to app.php
     
     'providers' => [
         '...',
-        'DemocracyApps\MultiOrg\MultiOrgServiceProvider',
+        'DemocracyApps\MemberOrg\MemberOrganizationServiceProvider',
     ];
 
 (note that the service provider is currently only needed if you wish to publish the configuration file in order to change the defaults.
@@ -33,7 +33,7 @@ Add the service provider to app.php
 The only requirement right now is that the user class obey Laravel's Authenticable contract. 
 
 Note that the EloquentOrganizationMember train only has stubs for the OrganizationMember 
-interface (unlike EloquentOrganization). I am holding off until I better understand requirements for it (if any).
+interface (unlike EloquentMemberOrganization). I am holding off until I better understand requirements for it (if any).
 
 ### Applying to an Organization
 
@@ -46,20 +46,20 @@ Let's assume that you have a *Company* class to which you wish to apply this pac
     
 Change the class to implement the Organization interface and make use of the EloquentOrganization trait:
 
-    use DemocracyApps\MultiOrg\EloquentOrganization;
-    use DemocracyApps\MultiOrg\Organization;
+    use DemocracyApps\MemberOrg\EloquentMemberOrganization;
+    use DemocracyApps\MemberOrg\Organization;
 
-    class Company implements Organization
+    class Company implements MemberOrganization
     {
-        use EloquentOrganization;
+        use EloquentMemberOrganization;
         ...
     }
     
 In addition, create a *CompanyMember* class (NOTE: the 'Member' part of the name is required. An option in the configuration file will
 allow it to be set to something different.):
 
-    use DemocracyApps\MultiOrg\EloquentOrganizationMember;
-    use DemocracyApps\MultiOrg\OrganizationMember;
+    use DemocracyApps\MemberOrg\EloquentOrganizationMember;
+    use DemocracyApps\MemberOrg\OrganizationMember;
 
     class CompanyMember implements OrganizationMember
     {
@@ -81,7 +81,7 @@ There are three main parameters and a few auxiliary ones. If you wish to change 
 
     php artisan vendor:publish
 
-and edit 'config/multi-org.php'.
+and edit 'config/member-org.php'.
 
 #### max_permission_level (default: 9)
 

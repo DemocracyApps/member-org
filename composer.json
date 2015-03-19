@@ -1,5 +1,5 @@
 {
-    "name": "democracyapps/multi-org",
+    "name": "democracyapps/member-org",
     "description": "Application support for multiple organization types, each with its own users and permissions",
     "license": "MIT",
     "type": "package",

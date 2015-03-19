@@ -1,6 +1,6 @@
-<?php namespace DemocracyApps\MultiOrg;
+<?php namespace DemocracyApps\MemberOrg;
 /*
-* This file is part of the DemocracyApps\multi-org package.
+* This file is part of the DemocracyApps\member-org package.
 *
 * Copyright 2015 DemocracyApps, Inc.
 *

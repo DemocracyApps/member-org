@@ -1,6 +1,6 @@
-<?php namespace DemocracyApps\MultiOrg;
+<?php namespace DemocracyApps\MemberOrg;
 /*
-* This file is part of the DemocracyApps\multi-org package.
+* This file is part of the DemocracyApps\member-org package.
 *
 * Copyright 2015 DemocracyApps, Inc.
 *
@@ -11,7 +11,7 @@
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 //
-// EloquentOrganization implements the Organization interface when the org is an Eloquent model
+// EloquentMemberOrganization implements the MemberOrganization interface when the org is an Eloquent model
 //
 
 trait EloquentMemberOrganization
