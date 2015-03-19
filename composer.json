@@ -18,6 +18,6 @@
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
-        "psr-4": {"DemocracyApps\\MultiOrg\\": "src/"}
+        "psr-4": {"DemocracyApps\\MemberOrg\\": "src/"}
     }
 }

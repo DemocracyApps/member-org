@@ -32,7 +32,7 @@ class MemberOrganizationServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/multi-org.php' => config_path('multi-org.php')
+            __DIR__ . '/config/member-org.php' => config_path('member-org.php')
         ]);
 
     }
