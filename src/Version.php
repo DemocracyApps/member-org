@@ -10,7 +10,7 @@
 */
 
 class Version {
-    const version = "0.1.2-dev";
+    const version = "1.0.0";
 
     public static function getVersion()
     {
