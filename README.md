@@ -39,7 +39,7 @@ interface (unlike EloquentMemberOrganization). I am holding off until I better u
 
 Let's assume that you have a *Company* class to which you wish to apply this package and that *Company* is a subclass of Eloquent Model:
 
-    class Company 
+    class Company extends Model
     {
      ...
     }
