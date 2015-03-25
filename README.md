@@ -12,21 +12,24 @@ The package is quite simple. It's most useful when a platform must support multi
 
 Begin by installing this package through Composer.
 
-    {
-        "require": {
-            "democracyapps/member-org": "dev-master"
-        }
+```json
+{
+    "require": {
+        "democracyapps/member-org": "dev-master"
     }
+}
+```
 
 Add the service provider to app.php
 
-
+```php
     // app/config/app.php
     
     'providers' => [
         '...',
         'DemocracyApps\MemberOrg\MemberOrganizationServiceProvider',
     ];
+```
 
 (note that the service provider is currently only needed if you wish to publish the configuration file in order to change the defaults.
 
@@ -39,13 +42,16 @@ interface (unlike EloquentMemberOrganization). I am holding off until I better u
 
 Let's assume that you have a *Company* class to which you wish to apply this package and that *Company* is a subclass of Eloquent Model:
 
+```php
     class Company extends Model
     {
      ...
     }
+```
     
 Change the class to implement the Organization interface and make use of the EloquentOrganization trait:
 
+```php
     use DemocracyApps\MemberOrg\EloquentMemberOrganization;
     use DemocracyApps\MemberOrg\Organization;
 
@@ -54,10 +60,12 @@ Change the class to implement the Organization interface and make use of the Elo
         use EloquentMemberOrganization;
         ...
     }
+```
     
 In addition, create a *CompanyMember* class (NOTE: the 'Member' part of the name is required. An option in the configuration file will
 allow it to be set to something different.):
 
+```php
     use DemocracyApps\MemberOrg\EloquentOrganizationMember;
     use DemocracyApps\MemberOrg\OrganizationMember;
 
@@ -66,12 +74,15 @@ allow it to be set to something different.):
         use EloquentOrganizationMember;
         ...
     }
+```
 
 and create a migration for it. It is required to have three columns:
 
+```
     user_id (foreign key referring to the 'id' column of your users table)
     company_id (foreign key referring to the 'id' column of your companies table)
     access (an integer)
+```
 
 None of the columns may be null. Note that the second column must be named with the snake_case version of your organization class with '_id" appended.
 
@@ -115,6 +126,7 @@ in route middleware to restrict access to organization pages (generally admin pa
 
 Here is a concrete example of a middleware class for company admin pages. In the route, the company ID is in the 2nd route segment.
 
+```php
     class VerifyCompanyAccess {
     
     	/**
@@ -143,7 +155,8 @@ Here is a concrete example of a middleware class for company admin pages. In the
     	}
     
     }
-    
+```
+
 ## Problems and Plans
  
 This module is being used for a couple products in active development and will probably evolve. If you find bugs or have
