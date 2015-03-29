@@ -5,6 +5,8 @@ a full implementation when added to an Eloquent model.
 
 The package is quite simple. It's most useful when a platform must support multiple types of organizations and organization members at the same time.
 
+**Important**: If you are thinking of using this package, please contact me via Twitter (@ejaxon). I am considering adding
+functionality around user invites, user management, migrations, etc. 
 
 ## Instructions For Use
 
