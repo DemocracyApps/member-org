@@ -20,7 +20,7 @@ trait EloquentMemberOrganization
     private function getOrgMemberClass()
     {
         $suffix = "User";
-        if (config('multi-org.member_class_suffix')) $suffix = config('multi-org.member_class_suffix');
+        if (config('member-org.member_class_suffix')) $suffix = config('member-org.member_class_suffix');
         $orgMemberClassName = get_class($this) . $suffix;
         return new \ReflectionClass($orgMemberClassName);
     }
@@ -55,17 +55,17 @@ trait EloquentMemberOrganization
          * If user is configured with a superuser flag, see if they are
          * a superuser.
          */
-        if (config('multi-org.user_implements_superuser')) {
-            if ($user->{config('multi-org.user_superuser_column')}) return true;
+        if (config('member-org.user_implements_superuser')) {
+            if ($user->{config('member-org.user_superuser_column')}) return true;
         }
 
         /*
          * If users are required to confirm their accounts, check that they
          * are confirmed or that we're below the threshold that requires it
          */
-        if (config('multi-org.user_implements_confirmation')) {
-            if ($minimumRequired > config('user_confirmation_required_threshold')) {
-                if (!($user->{config('multi-org.user_confirmation_column')})) return false;
+        if (config('member-org.user_implements_confirmation')) {
+            if ($minimumRequired > config('member.user_confirmation_required_threshold')) {
+                if (!($user->{config('member-org.user_confirmation_column')})) return false;
             }
         }
 
@@ -116,7 +116,7 @@ trait EloquentMemberOrganization
         $member->user_id = $user->getAuthIdentifier();
         $orgIdName = $this->getOrgIdName();
         $member->{$orgIdName} = $this->id;
-        $maxPermission = config('multi-org.max_permission_level');
+        $maxPermission = config('member-org.max_permission_level');
         if ($maxPermission == null) $maxPermission = 9;
         if ($access > $maxPermission) $access = $maxPermission;
         $member->access = $access;
@@ -147,7 +147,7 @@ trait EloquentMemberOrganization
     {
         $member = $this->getOrganizationMember($user);
         if ($member == null) throw new \Exception("User is not a member of the organization");
-        $maxPermission = config('multi-org.max_permission_level');
+        $maxPermission = config('member-org.max_permission_level');
         if ($maxPermission == null) $maxPermission = 9;
         if ($access > $maxPermission) $access = $maxPermission;
         $member->access = $access;
